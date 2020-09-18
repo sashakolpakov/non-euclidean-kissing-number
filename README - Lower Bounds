@@ -1,0 +1,7 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In order to obtain the lower bounds, we took the codes obtained by R.H. Hardin, W.D. Smith, N.J.A. Sloane, et al. available online at http://neilsloane.com/packings/ .
+
+The respective coordinates of those codes were subsequently rationalised and used to establish exact lower bounds available in the ancillary SageMath worksheets.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                             

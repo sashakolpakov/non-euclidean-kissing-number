@@ -1,0 +1,48 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In order to run the verification, please install Julia 1.1.0 and SDPA GMP and download
+the library on https://arxiv.org/abs/2001.00256 (which corresponds to the paper
+"Exact semidefinite programming bounds for packing problems" by Maria Dostert,
+David de Laat and Philippe Moustrou)
+
+Let r be the radius. Then costheta is equal to
+
+c = 1 - 1/(1+cosh(2.0*r)) or c = 1 - 1/(1+cos(2.0*r))
+
+depending whether we are considering the hyperbolic or spherical space.
+To make sure that c is not slightly smaller due to numerical computations,
+we set
+
+c = rationalize(c+1e-10)
+
+Let u be the corresponding SDP upper bound given in our paper. We set
+
+p = rationalize(u)
+
+Let n be the dimension and d be the maximal degree of the polynomials. 
+Then we generate the corresponding SDP by calling
+
+using Nemo, SemidefiniteProgramming, ThreePoint
+
+sdp = threepointsdp(n, d, costheta = c, objective = p)
+
+Next, we run the SDP with the SDPA GMP solver (SDPAGMP(2) calls SDPA GMP with the property 
+"slow but stable". For many examples it is enough to call SDPAGMP() )
+
+status, sol = solvesdp(sdp, SDPAGMP(2));
+
+From the floating point solution we obtain by the solver, we
+get a corresponding exact solution over rationals:
+
+roundedsol = roundingheuristic(sdp, sol);
+
+and this solution can be rigorously verified by
+
+isvalidsolution(sdp, roundedsol)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The computations of the respective Coxeter and Levenshtein upper bounds are available 
+in the ancillary SageMath worksheets. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                             
